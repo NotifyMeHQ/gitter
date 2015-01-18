@@ -27,13 +27,6 @@ class GitterGateway extends AbstractGateway implements GatewayInterface
     protected $endpoint = 'https://api.gitter.im';
 
     /**
-     * Gateway display name.
-     *
-     * @var string
-     */
-    protected $displayName = 'gitter';
-
-    /**
      * Gitter api version.
      *
      * @var string
