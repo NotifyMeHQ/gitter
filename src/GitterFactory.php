@@ -12,6 +12,8 @@
 
 namespace NotifyMeHQ\Gitter;
 
+use GuzzleHttp\Client;
+use NotifyMeHQ\NotifyMe\Arr;
 use NotifyMeHQ\NotifyMe\FactoryInterface;
 
 class GitterFactory implements FactoryInterface
@@ -25,6 +27,10 @@ class GitterFactory implements FactoryInterface
      */
     public function make(array $config)
     {
-        return new GitterGateway($config);
+        Arr::requires($config, ['token']);
+
+        $client = new Client();
+
+        return new GitterGateway($client, $config);
     }
 }
