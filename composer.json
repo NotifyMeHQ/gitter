@@ -1,0 +1,40 @@
+{
+    "name": "notifymehq/gitter",
+    "description": "Provides a gitter gateway for notifyme",
+    "license": "MIT",
+    "keywords": ["notifymehq", "notifyme", "gitter"],
+    "authors": [
+        {
+            "name": "Joseph Cohen",
+            "email": "joseph.cohen@dinkbit.com"
+        },
+        {
+            "name": "Graham Campbell",
+            "email": "graham@mineuk.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "notifymehq/notifyme": "~1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "NotifyMeHQ\\Gitter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "NotifyMeHQ\\Gitter\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
