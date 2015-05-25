@@ -5,16 +5,20 @@
     "keywords": ["notifymehq", "notifyme", "gitter"],
     "authors": [
         {
-            "name": "Joseph Cohen",
-            "email": "joseph.cohen@dinkbit.com"
+            "name": "James Brooks",
+            "email": "james@cachethq.io"
         },
         {
             "name": "Graham Campbell",
-            "email": "graham@mineuk.com"
+            "email": "graham@cachethq.io"
+        },
+        {
+            "name": "Joseph Cohen",
+            "email": "joe@cachethq.io"
         }
     ],
     "require": {
-        "php": ">=5.4.0",
+        "php": ">=5.5.9",
         "guzzlehttp/guzzle": "~5.0",
         "notifymehq/notifyme": "~1.0"
     },
