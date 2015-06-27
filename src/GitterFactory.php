@@ -12,8 +12,8 @@
 namespace NotifyMeHQ\Gitter;
 
 use GuzzleHttp\Client;
-use NotifyMeHQ\NotifyMe\Arr;
 use NotifyMeHQ\Contracts\FactoryInterface;
+use NotifyMeHQ\NotifyMe\Arr;
 
 class GitterFactory implements FactoryInterface
 {
