@@ -58,7 +58,7 @@ class GitterGateway implements GatewayInterface
      */
     public function notify($to, $message)
     {
-        $params = ['text' => $message]
+        $params = ['text' => $message];
 
         return $this->send($this->buildUrlFromString("rooms/{$to}/chatMessages"), $params);
     }
@@ -87,20 +87,18 @@ class GitterGateway implements GatewayInterface
             'json' => $params,
         ]);
 
-        $response = [];
-
         switch ($rawResponse->getStatusCode()) {
-            case 201:
+            case 200:
                 $success = true;
                 break;
             case 400:
-                $response['error'] = 'Incorrect request values.';
+                $response = ['error' => 'Incorrect request values.'];
                 break;
             case 404:
-                $response['error'] = 'Invalid room.';
+                $response = ['error' => 'Invalid room.'];
                 break;
             default:
-                $response['error'] = $this->responseError($rawResponse);
+                $response = $this->responseError($rawResponse);
         }
 
         return $this->mapResponse($success, $response);
