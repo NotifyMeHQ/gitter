@@ -36,20 +36,6 @@ class GitterGateway implements GatewayInterface
     protected $version = 'v1';
 
     /**
-     * The http client.
-     *
-     * @var \GuzzleHttp\Client
-     */
-    protected $client;
-
-    /**
-     * Configuration options.
-     *
-     * @var string[]
-     */
-    protected $config;
-
-    /**
      * Create a new gitter gateway instance.
      *
      * @param \GuzzleHttp\Client $client
@@ -66,78 +52,58 @@ class GitterGateway implements GatewayInterface
     /**
      * Send a notification.
      *
-     * @param string   $to
-     * @param string   $message
-     * @param string[] $options
+     * @param string $to
+     * @param string $message
      *
      * @return \NotifyMeHQ\Contracts\ResponseInterface
      */
-    public function notify($to, $message, array $options = [])
+    public function notify($to, $message)
     {
-        $options['to'] = $to;
+        $params = [
+            'to'    => $to,
+            'text'  => $message
+        ];
 
-        $params = $this->addMessage($message, $params, $options);
-
-        return $this->commit('post', $this->buildUrlFromString("rooms/{$to}/chatMessages"), $params);
-    }
-
-    /**
-     * Add a message to the request.
-     *
-     * @param string   $message
-     * @param string[] $params
-     * @param string[] $options
-     *
-     * @return array
-     */
-    protected function addMessage($message, array $params, array $options)
-    {
-        $params['token'] = Arr::get($options, 'token', $this->config['token']);
-
-        $params['text'] = $message;
-
-        return $params;
+        return $this->commit($params);
     }
 
     /**
      * Commit a HTTP request.
      *
-     * @param string   $method
-     * @param string   $url
      * @param string[] $params
-     * @param string[] $options
      *
      * @return mixed
      */
-    protected function commit($method = 'post', $url, array $params = [], array $options = [])
+    protected function commit(array $params)
     {
         $success = false;
 
-        $token = $params['token'];
-
-        unset($params['token']);
-
-        $rawResponse = $this->client->{$method}($url, [
+        $rawResponse = $this->client->post($url, [
             'exceptions'      => false,
             'timeout'         => '80',
             'connect_timeout' => '30',
             'headers'         => [
                 'Accept'        => 'application/json',
                 'Content-Type'  => 'application/json',
-                'Authorization' => 'Bearer '.$token,
+                'Authorization' => 'Bearer '.$this->config['token'],
             ],
             'json' => $params,
         ]);
 
-        if ($rawResponse->getStatusCode() == 200) {
-            $response = [];
-            $success = true;
-        } elseif ($rawResponse->getStatusCode() == 404) {
-            $response['error'] = 'Inválid room.';
-        } elseif ($rawResponse->getStatusCode() == 400) {
-            $response['error'] = 'Incorrect request values.';
-        } else {
-            $response = $this->responseError($rawResponse);
+        $response = [];
+
+        switch ($rawResponse->getStatusCode()) {
+            case 201:
+                $success = true;
+                break;
+            case 400:
+                $response['error'] = 'Incorrect request values.';
+                break;
+            case 404:
+                $response['error'] = 'Invalid room.';
+                break;
+            default:
+                $response['error'] = $this->responseError($rawResponse);
         }
 
         return $this->mapResponse($success, $response);
@@ -162,7 +128,7 @@ class GitterGateway implements GatewayInterface
     /**
      * Get the default json response.
      *
-     * @param string $rawResponse
+     * @param \GuzzleHttp\Message\Response $rawResponse
      *
      * @return array
      */
