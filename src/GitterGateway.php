@@ -89,6 +89,7 @@ class GitterGateway implements GatewayInterface
 
         switch ($rawResponse->getStatusCode()) {
             case 200:
+                $response = [];
                 $success = true;
                 break;
             case 400:
