@@ -21,14 +21,14 @@ class GitterGateway implements GatewayInterface
     use HttpGatewayTrait;
 
     /**
-     * Gateway api endpoint.
+     * The api endpoint.
      *
      * @var string
      */
     protected $endpoint = 'https://api.gitter.im';
 
     /**
-     * Gitter api version.
+     * The api version.
      *
      * @var string
      */
@@ -60,18 +60,18 @@ class GitterGateway implements GatewayInterface
     {
         $params = ['text' => $message]
 
-        return $this->commit($this->buildUrlFromString("rooms/{$to}/chatMessages"), $params);
+        return $this->send($this->buildUrlFromString("rooms/{$to}/chatMessages"), $params);
     }
 
     /**
-     * Commit a HTTP request.
+     * Send the notification over the wire.
      *
      * @param string   $url
      * @param string[] $params
      *
-     * @return mixed
+     * @return \NotifyMeHQ\Contracts\ResponseInterface
      */
-    protected function commit($url, array $params)
+    protected function send($url, array $params)
     {
         $success = false;
 
@@ -107,7 +107,7 @@ class GitterGateway implements GatewayInterface
     }
 
     /**
-     * Map HTTP response to response object.
+     * Map the raw response to our response object.
      *
      * @param bool  $success
      * @param array $response
