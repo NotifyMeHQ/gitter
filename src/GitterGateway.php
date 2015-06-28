@@ -66,6 +66,7 @@ class GitterGateway implements GatewayInterface
     /**
      * Commit a HTTP request.
      *
+     * @param string   $url
      * @param string[] $params
      *
      * @return mixed
