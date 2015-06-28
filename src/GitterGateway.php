@@ -58,12 +58,9 @@ class GitterGateway implements GatewayInterface
      */
     public function notify($to, $message)
     {
-        $params = [
-            'to'    => $to,
-            'text'  => $message,
-        ];
+        $params = ['text' => $message]
 
-        return $this->commit($params);
+        return $this->commit($this->buildUrlFromString("rooms/{$to}/chatMessages"), $params);
     }
 
     /**
@@ -73,7 +70,7 @@ class GitterGateway implements GatewayInterface
      *
      * @return mixed
      */
-    protected function commit(array $params)
+    protected function commit($url, array $params)
     {
         $success = false;
 
