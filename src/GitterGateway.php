@@ -127,7 +127,7 @@ class GitterGateway implements GatewayInterface
     /**
      * Get the default json response.
      *
-     * @param \GuzzleHttp\Message\Response $rawResponse
+     * @param \GuzzleHttp\Message\ResponseInterface $rawResponse
      *
      * @return array
      */
