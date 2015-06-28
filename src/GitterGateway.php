@@ -13,7 +13,6 @@ namespace NotifyMeHQ\Gitter;
 
 use GuzzleHttp\Client;
 use NotifyMeHQ\Contracts\GatewayInterface;
-use NotifyMeHQ\NotifyMe\Arr;
 use NotifyMeHQ\NotifyMe\HttpGatewayTrait;
 use NotifyMeHQ\NotifyMe\Response;
 
@@ -61,7 +60,7 @@ class GitterGateway implements GatewayInterface
     {
         $params = [
             'to'    => $to,
-            'text'  => $message
+            'text'  => $message,
         ];
 
         return $this->commit($params);
